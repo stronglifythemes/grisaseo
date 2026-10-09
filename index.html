@@ -1,0 +1,581 @@
+<!DOCTYPE html><html lang="en"><head>
+	
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width"/>
+<meta name="builder" content="Stronglify"/>
+<link rel="icon" type="image/x-icon" href="https://media.stronglify.com/295/favicon-1791313660-1791392203.svg"/>
+<title>Halden | A sky console for open-range herds</title>
+<meta name="description" content="Halden is a field console that reads cloud build-up, wind and pasture moisture over your range and tells you when to move cattle, hours before the front arrives."/>
+<meta name="robots" content="index"/>
+<link rel="canonical" href="https://stronglifythemes.github.io/"/><style>
+html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type=button],[type=reset],[type=submit]{-webkit-appearance:button}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}
+fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}img{max-width:100%;height:auto}
+</style><link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Michroma&amp;display=swap" rel="stylesheet"/>
+<script src="https://media.stronglify.com/tailwind-play-3.4.17.js"></script>
+<script>tailwind.config={theme:{extend:{colors:{putty:{DEFAULT:"#b8b5a7",hi:"#d6d3c6",lo:"#8f8c7f",deep:"#a9a698"},seam:"#5c5a51",ink:"#26251f",label:"#403e35",slot:"#131311",phos:"#e9e5d4",crt:"#2a55b0"},fontFamily:{display:["Michroma","system-ui","sans-serif"],sans:['"IBM Plex Sans"',"system-ui","sans-serif"],mono:['"IBM Plex Mono"',"ui-monospace","monospace"]}}}};</script>
+<style>:focus-visible{outline:2px solid #26251f;outline-offset:2px}.bezel :focus-visible,.slot :focus-visible{outline-color:#e9e5d4}.plate{position:relative;background-color:#b8b5a7;background-image:linear-gradient(180deg,rgba(255,255,255,.07),rgba(0,0,0,.05));box-shadow:inset 1px 1px 0 #d6d3c6,inset -1px -1px 0 #8f8c7f}.screws{background-image:radial-gradient(circle at 10px 10px,#5c5a51 0 1px,#98958a 1.6px 3.2px,#cfccbf 3.6px 4.2px,transparent 4.8px),radial-gradient(circle at calc(100% - 10px) 10px,#5c5a51 0 1px,#98958a 1.6px 3.2px,#cfccbf 3.6px 4.2px,transparent 4.8px),radial-gradient(circle at 10px calc(100% - 10px),#5c5a51 0 1px,#98958a 1.6px 3.2px,#cfccbf 3.6px 4.2px,transparent 4.8px),radial-gradient(circle at calc(100% - 10px) calc(100% - 10px),#5c5a51 0 1px,#98958a 1.6px 3.2px,#cfccbf 3.6px 4.2px,transparent 4.8px),linear-gradient(180deg,rgba(255,255,255,.07),rgba(0,0,0,.05))}.well{background:#a9a698;box-shadow:inset 1px 1px 0 #8f8c7f,inset -1px -1px 0 #d6d3c6}.bezel{background:#1b1b19;box-shadow:inset 0 0 0 2px #0b0b0a,inset 0 0 0 3px #3a3a36,0 0 0 1px #8f8c7f,1px 1px 0 1px #d6d3c6}.screen{position:relative;overflow:hidden;background:#0b1840}.screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.32) 100%)}.ticks{height:6px;background:repeating-linear-gradient(90deg,#e9e5d4 0 1px,transparent 1px 9px);opacity:.7}.slot{background:#131311;color:#e9e5d4;font-family:"IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;box-shadow:inset 0 2px 3px rgba(0,0,0,.9),0 0 0 1px #8f8c7f,1px 1px 0 1px #d6d3c6}.num{display:inline-grid;place-items:center;flex:none;width:22px;height:22px;font:400 11px/1 "Michroma",sans-serif;color:#26251f;background:#d6d3c6;box-shadow:inset 0 0 0 1px #5c5a51,1px 1px 0 #8f8c7f}.key{display:inline-grid;place-items:center;font:500 11px/1 "IBM Plex Mono",monospace;letter-spacing:.04em;color:#26251f;background:linear-gradient(180deg,#d9d6ca,#c2bfb2);box-shadow:inset 1px 1px 0 #ecebe3,inset -1px -1px 0 #8f8c7f,0 0 0 1px #5c5a51,0 2px 0 1px #7a776c;cursor:pointer;user-select:none;transition:transform .06s,box-shadow .06s}.key:hover{background:linear-gradient(180deg,#e2dfd4,#cbc8bc)}.key:active,.key[aria-pressed="true"]{transform:translateY(2px);background:linear-gradient(180deg,#b3b0a3,#c2bfb2);box-shadow:inset 1px 1px 0 #8f8c7f,inset -1px -1px 0 #d6d3c6,0 0 0 1px #5c5a51}.key-dark{color:#e9e5d4;background:linear-gradient(180deg,#3c3b36,#26251f);box-shadow:inset 1px 1px 0 #5c5a51,inset -1px -1px 0 #0d0d0c,0 0 0 1px #131311,0 2px 0 1px #7a776c}.key-dark:hover{background:linear-gradient(180deg,#4a4943,#302f29)}.key-dark:active{background:linear-gradient(180deg,#1e1d19,#26251f);box-shadow:inset 1px 1px 0 #0d0d0c,0 0 0 1px #131311}.led{width:7px;height:7px;border-radius:50%;background:#5c5a51;box-shadow:inset 0 0 0 1px #403e35;flex:none}.led.on,[aria-pressed="true"] .led{background:#d9482b;box-shadow:0 0 5px rgba(217,72,43,.8),inset 0 0 0 1px #8a2a17}input[type="range"].fader{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;cursor:pointer}input[type="range"].fader::-webkit-slider-runnable-track{height:8px;background:#131311;box-shadow:inset 0 1px 2px #000,0 0 0 1px #8f8c7f,1px 1px 0 1px #d6d3c6}input[type="range"].fader::-moz-range-track{height:8px;background:#131311;box-shadow:inset 0 1px 2px #000,0 0 0 1px #8f8c7f,1px 1px 0 1px #d6d3c6}input[type="range"].fader::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:22px;margin-top:-7px;border:0;border-radius:0;background:linear-gradient(90deg,#d9d6ca 0 6px,#5c5a51 6px 7px,#d9d6ca 7px 9px,#5c5a51 9px 10px,#d9d6ca 10px);box-shadow:inset 1px 1px 0 #ecebe3,inset -1px -1px 0 #8f8c7f,0 0 0 1px #5c5a51,0 2px 0 1px #7a776c}input[type="range"].fader::-moz-range-thumb{width:16px;height:22px;border:0;border-radius:0;background:linear-gradient(90deg,#d9d6ca 0 6px,#5c5a51 6px 7px,#d9d6ca 7px 9px,#5c5a51 9px 10px,#d9d6ca 10px);box-shadow:inset 1px 1px 0 #ecebe3,inset -1px -1px 0 #8f8c7f,0 0 0 1px #5c5a51}.graph{background-color:#2a55b0;background-image:linear-gradient(rgba(233,229,212,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(233,229,212,.22) 1px,transparent 1px);background-size:100% 12.5%,8.333% 100%}.vent{background:repeating-linear-gradient(90deg,#131311 0 3px,transparent 3px 7px)}.hero-shade{background:linear-gradient(90deg,rgba(9,22,66,.88) 0%,rgba(9,22,66,.72) 38%,rgba(9,22,66,0) 72%)}.osd{text-shadow:0 1px 0 rgba(0,0,0,.55),0 0 14px rgba(9,22,66,.6)}.blink{animation:blink 1.2s steps(2,start) infinite}@keyframes blink{to{visibility:hidden}}@media (prefers-reduced-motion:reduce){.blink{animation:none}.key{transition:none}}.copy{font-size:17px;line-height:1.625;overflow-wrap:break-word}.copy > * + *{margin-top:1rem}.copy h2{margin-top:3rem;font:400 24px/1.3 "Michroma",sans-serif}.copy h3{margin-top:2rem;font:400 15px/1.375 "Michroma",sans-serif}.copy a{text-decoration:underline;text-underline-offset:4px}.copy a:hover{text-decoration:none}.copy ul,.copy ol{padding-left:1.5rem}.copy ul{list-style:square}.copy ol{list-style:decimal}.copy li + li{margin-top:.5rem}.copy li::marker{color:#403e35;font-family:"IBM Plex Mono",monospace;font-size:13px}.copy blockquote,.copy figure{margin-top:2rem;margin-bottom:2rem}.copy blockquote{padding:20px;background:#a9a698;box-shadow:inset 1px 1px 0 #8f8c7f,inset -1px -1px 0 #d6d3c6}.copy img{display:block;width:100%;height:auto;padding:7px;background:#1b1b19;box-shadow:inset 0 0 0 2px #0b0b0a,inset 0 0 0 3px #3a3a36,0 0 0 1px #8f8c7f,1px 1px 0 1px #d6d3c6}.copy figcaption{margin-top:12px;font:500 10px/1.5 "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:#403e35}.copy > :first-child{margin-top:0}.copy > :last-child{margin-bottom:0}@media (min-width:640px){.copy h2{font-size:32px}}</style>
+
+
+<style>html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style></head>
+<body class="bg-seam font-sans text-ink antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-50 focus:bg-putty-hi focus:px-3 focus:py-2">Skip to content</a>
+
+<div class="mx-auto flex max-w-[1480px] flex-col gap-[3px] p-[3px] sm:p-2">
+
+  
+  <header class="plate flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-2.5 sm:px-6">
+    <a href="/grisaseo/" class="flex items-center gap-3" aria-label="Halden, home">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+        <rect x=".5" y=".5" width="25" height="25" fill="#131311" stroke="#5c5a51"></rect>
+        <path d="M4 18h18M6 18a7 7 0 0 1 14 0" fill="none" stroke="#e9e5d4" stroke-width="1.6"></path>
+        <path d="M13 6v3M7 8.5l1.6 2.2M19 8.5l-1.6 2.2" stroke="#e9e5d4" stroke-width="1.4"></path>
+      </svg>
+      <img src="https://media.stronglify.com/295/grisaseo-01-1791313393-1791392207.jpg" alt="Halden" class="h-[26px] w-auto"/>
+      <span class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label hidden lg:inline">Sky console MK-7</span>
+    </a>
+    <nav aria-label="Main" class="order-3 w-full md:order-none md:w-auto">
+      <ul class="flex flex-wrap gap-2">
+        
+        <li><a href="/grisaseo/" class="key px-3 py-2">Home</a></li>
+        
+        <li><a href="/grisaseo/page" class="key px-3 py-2">About</a></li>
+        
+        <li><a href="/grisaseo/blog" class="key px-3 py-2">Blog</a></li>
+        
+      </ul>
+    </nav>
+    <div class="flex items-center gap-2">
+      <span class="led on" aria-hidden="true"></span>
+      <span class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Unit 02 · On air</span>
+    </div>
+  </header>
+
+
+<main id="main" class="flex flex-col gap-[3px]">
+
+  
+  <section id="console" aria-labelledby="hero-title" class="grid gap-[3px] lg:min-h-[min(calc(100vh_-_70px),880px)] lg:grid-cols-[minmax(0,1fr)_330px]">
+
+    <div class="flex min-h-0 min-w-0 flex-col gap-[3px]">
+
+      <div class="plate screws flex min-h-0 flex-1 flex-col px-4 pb-5 pt-2 sm:px-7">
+        <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label pb-1.5 text-center">MCA · Main range feed</p>
+        <div class="bezel flex min-h-0 flex-1 flex-col p-[7px] sm:p-3">
+          <div class="flex justify-between gap-4 overflow-hidden whitespace-nowrap border-y border-[#3a3a36] bg-[#0d0d0c] px-2 py-[5px] font-mono text-[10px] uppercase leading-none tracking-[.1em] text-phos" aria-hidden="true">
+            <span>CH <span data-out="channel">01</span> · <span data-out="feed">North range</span></span>
+            <span class="hidden sm:inline">Cloud base <span data-out="base">2,140</span> m</span>
+            <span class="hidden md:inline">Wind <span data-out="wind">14 kt NW</span></span>
+            <span class="hidden xl:inline">Build <span data-out="build">0.72</span></span>
+            <span><span data-out="clock">13:06:42</span> UTC</span>
+          </div>
+          <div class="screen flex-1 md:min-h-[480px] lg:min-h-[400px]">
+            <img id="main-picture" src="https://media.stronglify.com/295/grisaseo-02-1791313481-1791392209.jpg" alt="A wide feathered cloud sweeping across a deep blue sky above pale open grassland with animals gathered on the horizon" class="h-60 w-full object-cover object-[62%_70%] sm:h-80 md:absolute md:inset-0 md:h-full md:object-[70%_60%]"/>
+            <div class="hero-shade absolute inset-0 hidden md:block"></div>
+            <div class="osd flex flex-col gap-4 px-5 py-7 text-phos sm:p-8 md:absolute md:inset-y-0 md:left-0 md:max-w-[72%] md:justify-center lg:max-w-[62%] lg:p-10">
+              <p class="font-mono text-[11px] uppercase tracking-[.2em]"><span class="blink" aria-hidden="true">▮</span> <span data-out="alert">Front inbound</span> · ETA <span data-out="eta">04:12:00</span></p>
+              <h1 id="hero-title" class="font-display text-[26px] leading-[1.25] sm:text-[34px] xl:text-[44px] xl:leading-[1.2]">Read the sky before the herd does.</h1>
+              <p class="max-w-[46ch] text-[16px] leading-relaxed sm:text-[17px]">Halden is a field console that watches cloud build-up, wind and pasture moisture over your range, and tells you when to move cattle, hours before the front arrives.</p>
+              <div class="flex flex-wrap gap-3 pt-1">
+                <a href="/grisaseo/#order" class="key px-5 py-3.5 text-[12px] uppercase tracking-[.14em]">Request a field unit</a>
+                <a href="/grisaseo/#range-select" class="key key-dark px-5 py-3.5 text-[12px] uppercase tracking-[.14em]">See how it reads</a>
+              </div>
+              <p class="max-w-[46ch] border-l-2 border-phos/70 bg-slot/60 px-3 py-2 text-[13px] leading-snug" aria-live="polite"><span data-out="advisory">North range: move Herd B to Lee B before the front reaches the ridge.</span></p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between gap-4 overflow-hidden whitespace-nowrap border-y border-[#3a3a36] bg-[#0d0d0c] px-2 py-[5px] font-mono text-[10px] uppercase leading-none tracking-[.1em] text-phos" aria-hidden="true">
+            <span>Lat 47.19 N</span>
+            <span class="ticks hidden flex-1 sm:block"></span>
+            <span><span data-out="herd">Herd B · 48 head</span></span>
+            <span class="ticks hidden flex-1 md:block"></span>
+            <span>Lon 102.83 E</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-[3px] md:grid-cols-[minmax(0,1fr)_150px_minmax(0,300px)] lg:h-[212px] lg:flex-none">
+
+        <div class="plate screws flex flex-col gap-3 px-5 py-4 sm:px-7 lg:py-3.5">
+          <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+            <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Paddock entry</p>
+            <div class="slot min-w-0 flex-1 truncate md:basis-full lg:basis-0 px-2 py-1 text-[12px]" aria-live="polite"><span data-out="entry">PDK __ · Key no. + ENT</span></div>
+          </div>
+          <div class="flex min-h-0 flex-1 gap-3">
+            <div class="well grid flex-1 grid-cols-7 gap-[7px] p-2.5" role="group" aria-label="Keypad">
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="7">7</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="8">8</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="9">9</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-range="N" aria-label="North range feed">F1</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-range="E" aria-label="East range feed">F2</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-nudge="gain:8" aria-label="Screen gain up">▲</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="clr" aria-label="Clear entry">CLR</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="4">4</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="5">5</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="6">6</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-range="S" aria-label="South range feed">F3</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-range="W" aria-label="West range feed">F4</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-nudge="gain:-8" aria-label="Screen gain down">▼</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="0">0</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="1">1</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="2">2</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-key="3">3</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-nudge="horizon:-1" aria-label="Shorter forecast horizon">◀</button>
+              <button type="button" class="key min-h-[40px] lg:min-h-[30px]" data-nudge="horizon:1" aria-label="Longer forecast horizon">▶</button>
+              <button type="button" class="key key-dark col-span-2 min-h-[40px] lg:min-h-[30px]" data-key="ent" aria-label="Enter paddock">ENT</button>
+            </div>
+            <div class="vent hidden w-7 sm:block" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="plate flex flex-row flex-wrap items-center gap-3 px-4 py-4 md:flex-col md:items-stretch">
+          <div class="slot flex-1 px-2 py-1.5 text-center text-[11px] md:flex-none" aria-live="polite"><span data-out="state">Live · N</span></div>
+          <button type="button" class="key gap-2 px-3 py-2.5 md:w-full" id="hold" aria-pressed="false" aria-label="Freeze live readings"><span class="flex items-center gap-2"><span class="led" aria-hidden="true"></span>Hold</span></button>
+          <button type="button" class="key gap-2 px-3 py-2.5 md:w-full" id="scan" aria-pressed="false" aria-label="Cycle through range feeds"><span class="flex items-center gap-2"><span class="led" aria-hidden="true"></span>Scan</span></button>
+          <button type="button" class="key px-3 py-2.5 md:w-full" id="reset-console" aria-label="Reset console">Reset</button>
+          <div class="well hidden flex-1 md:block" aria-hidden="true"></div>
+          <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label hidden md:block">Transport</p>
+        </div>
+
+        <div class="plate flex flex-col px-4 pb-4 pt-2">
+          <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label pb-1.5">Cam 2 · Herd</p>
+          <div class="bezel flex min-h-0 flex-1 flex-col p-[6px]">
+            <div class="flex justify-between gap-4 overflow-hidden whitespace-nowrap border-y border-[#3a3a36] bg-[#0d0d0c] px-2 py-[5px] font-mono text-[10px] uppercase leading-none tracking-[.1em] text-phos" aria-hidden="true"><span>Cam 2</span><span data-out="herd">Herd B · 48 head</span></div>
+            <div class="screen min-h-[170px] flex-1 lg:min-h-0">
+              <img src="https://media.stronglify.com/295/grisaseo-03-1791313482-1791392208.jpg" alt="Three cattle grazing on green steppe below low hills and bright cumulus" class="absolute inset-0 h-full w-full object-cover object-[50%_72%]"/>
+            </div>
+            <div class="flex justify-between gap-4 overflow-hidden whitespace-nowrap border-y border-[#3a3a36] bg-[#0d0d0c] px-2 py-[5px] font-mono text-[10px] uppercase leading-none tracking-[.1em] text-phos" aria-hidden="true"><span>Move <span data-out="move">C → Lee B</span></span><span>REC</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid min-h-0 gap-[3px] sm:grid-cols-2 lg:flex lg:flex-col">
+
+      <div class="plate screws flex flex-col px-5 pb-4 pt-2 sm:col-span-2">
+        <div class="flex justify-between pb-1.5"><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Unit 02 · Pressure</p><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">00 · 08</p></div>
+        <div class="bezel p-[6px]">
+          <div class="screen graph h-[150px] lg:h-[98px]">
+            <svg viewBox="0 0 240 120" preserveAspectRatio="none" class="absolute inset-0 h-full w-full" role="img" aria-label="Pressure trend rising over the forecast horizon">
+              <path id="curve" d="" fill="none" stroke="#f4f1e4" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <p class="absolute left-2 top-1.5 font-mono text-[10px] uppercase tracking-[.1em] text-phos">hPa / <span data-out="horizon">6</span> h</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 pt-3">
+          <label for="horizon" class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label w-16">Horizon</label>
+          <input id="horizon" type="range" class="fader" min="2" max="12" step="1" value="6"/>
+        </div>
+      </div>
+
+      <div class="plate flex flex-1 flex-col justify-center gap-2 px-5 py-2.5">
+        <div class="flex items-center gap-3">
+          <span class="num">1</span>
+          <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label flex-1">Cloud build</p>
+          <span class="led on" aria-hidden="true"></span>
+        </div>
+        <div class="grid grid-cols-[1fr_1fr] gap-2.5">
+          <div class="slot px-2 py-1.5 text-[12px]"><span data-out="build">0.72</span> idx</div>
+          <div class="slot px-2 py-1.5 text-[12px]"><span data-out="base">2,140</span> m</div>
+        </div>
+      </div>
+
+      <div class="plate flex flex-1 flex-col justify-center gap-2 px-5 py-2.5">
+        <div class="flex items-center gap-3">
+          <span class="num">2</span>
+          <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label flex-1">Wind · Gain</p>
+          <div class="slot px-2 py-1 text-[11px]"><span data-out="wind">14 kt NW</span></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <label for="gain" class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label w-16">Screen</label>
+          <input id="gain" type="range" class="fader" min="60" max="140" step="1" value="100"/>
+          <output class="font-mono text-[10px] text-label"><span data-out="gain">100</span>%</output>
+        </div>
+      </div>
+
+      <div class="plate flex flex-1 flex-col justify-center gap-2 px-5 py-2.5">
+        <div class="flex items-center gap-3">
+          <span class="num">3</span>
+          <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label flex-1">Pasture moisture</p>
+        </div>
+        <div class="slot flex items-center gap-2 px-2 py-1.5 text-[12px]">
+          <span class="w-10"><span data-out="moist">31</span>%</span>
+          <span class="block h-2 flex-1 bg-[#2b2b27]"><span id="moist-bar" class="block h-full bg-phos" style="width:31%"></span></span>
+        </div>
+      </div>
+
+      <div class="plate flex flex-1 flex-col justify-center gap-2 px-5 py-2.5">
+        <div class="grid grid-cols-[1.25fr_1fr] gap-x-2.5 gap-y-1.5">
+          <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Next move</p>
+          <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Window</p>
+          <div class="slot truncate px-2 py-1.5 text-[12px]" aria-live="polite"><span data-out="move">C → Lee B</span></div>
+          <div class="slot px-2 py-1.5 text-[12px]"><span data-out="eta">04:12:00</span></div>
+        </div>
+      </div>
+
+      <div id="range-select" tabindex="-1" class="plate screws flex flex-col justify-center gap-3 px-5 py-4 sm:col-span-2 lg:h-[212px] lg:flex-none">
+        <div class="flex items-center justify-between"><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Range select</p><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">F1–F4 · 0–9 + ENT</p></div>
+        <div class="slot px-2 py-1.5 text-[12px]" aria-live="polite">Feed · <span data-out="feed">North range</span></div>
+        <div class="well grid grid-cols-4 gap-[7px] p-2.5" role="group" aria-label="Range feed">
+          <button type="button" class="key flex-col gap-1.5 py-2.5" data-range="N" aria-pressed="true"><span class="led" aria-hidden="true"></span>N</button>
+          <button type="button" class="key flex-col gap-1.5 py-2.5" data-range="E" aria-pressed="false"><span class="led" aria-hidden="true"></span>E</button>
+          <button type="button" class="key flex-col gap-1.5 py-2.5" data-range="S" aria-pressed="false"><span class="led" aria-hidden="true"></span>S</button>
+          <button type="button" class="key flex-col gap-1.5 py-2.5" data-range="W" aria-pressed="false"><span class="led" aria-hidden="true"></span>W</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="station" aria-labelledby="station-title" class="grid scroll-mt-2 gap-[3px] lg:grid-cols-[minmax(0,1fr)_minmax(0,460px)]">
+    <div class="plate screws px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+      <div class="flex items-center gap-3"><span class="num">A</span><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">The station</p></div>
+      <h2 id="station-title" class="mt-6 max-w-[22ch] font-display text-[24px] leading-[1.3] sm:text-[32px]">A weather station that thinks in paddocks.</h2>
+      <div class="mt-6 max-w-[62ch] space-y-4 text-[17px] leading-relaxed"><p>Forecasts are written for towns. Your herd lives forty kilometres from the nearest one, on ground where a front can cross a ridge and drop the temperature twelve degrees in an hour.</p><p>Halden puts one nine-metre mast on your range and one console on your desk. The mast watches the sky the way a stockman does: how fast the cloud is building, which way the wind is backing, how wet the grass is underfoot. The console turns that into one plain instruction: which paddock, and by when.</p></div>
+      <a href="/grisaseo/#instruments" class="key mt-8 px-5 py-3.5 text-[12px] uppercase tracking-[.14em]">Meet the instruments</a>
+    </div>
+
+    <div class="plate flex flex-col px-5 pb-6 pt-3 sm:px-8">
+      <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label pb-2">Cam 3 · Mast view</p>
+      <div class="bezel flex flex-1 flex-col p-[7px]">
+        <div class="flex justify-between gap-4 overflow-hidden whitespace-nowrap border-y border-[#3a3a36] bg-[#0d0d0c] px-2 py-[5px] font-mono text-[10px] uppercase leading-none tracking-[.1em] text-phos" aria-hidden="true"><span>Cam 3 · Mast</span><span>Build 0.91</span></div>
+        <div class="screen min-h-[320px] flex-1">
+          <img loading="lazy" src="https://media.stronglify.com/295/grisaseo-04-1791313484-1791392206.jpg" alt="A tall cloud tower rising into blue sky over a dark ridge at the edge of the steppe" class="absolute inset-0 h-full w-full object-cover"/>
+        </div>
+        <div class="flex justify-between gap-4 overflow-hidden whitespace-nowrap border-y border-[#3a3a36] bg-[#0d0d0c] px-2 py-[5px] font-mono text-[10px] uppercase leading-none tracking-[.1em] text-phos" aria-hidden="true"><span>Tower 6.2 km</span><span>17:48</span></div>
+      </div>
+    </div>
+
+    <ul class="grid gap-[3px] sm:grid-cols-3 lg:col-span-2">
+      
+      <li class="plate px-6 py-7 sm:px-8">
+        <div class="slot px-3 py-3 font-display text-[26px] normal-case tracking-normal">6 h</div>
+        <p class="mt-3 text-[15px] leading-snug">Median warning before a front reaches the herd.</p>
+      </li>
+      
+      <li class="plate px-6 py-7 sm:px-8">
+        <div class="slot px-3 py-3 font-display text-[26px] normal-case tracking-normal">40 km</div>
+        <p class="mt-3 text-[15px] leading-snug">Radius of sky and ground read from a single mast.</p>
+      </li>
+      
+      <li class="plate px-6 py-7 sm:px-8">
+        <div class="slot px-3 py-3 font-display text-[26px] normal-case tracking-normal">11 W</div>
+        <p class="mt-3 text-[15px] leading-snug">Draw of the whole station. One solar panel runs it.</p>
+      </li>
+      
+    </ul>
+  </section>
+
+  
+  <section id="instruments" aria-labelledby="instruments-title" class="flex scroll-mt-2 flex-col gap-[3px]">
+    <div class="plate flex flex-wrap items-end justify-between gap-6 px-6 py-10 sm:px-12 lg:px-16">
+      <div>
+        <div class="flex items-center gap-3"><span class="num">B</span><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Instruments</p></div>
+        <h2 id="instruments-title" class="mt-5 max-w-[24ch] font-display text-[24px] leading-[1.3] sm:text-[32px]">Four modules. One instruction.</h2>
+      </div>
+      <p class="max-w-[44ch] text-[17px] leading-relaxed">Each module does one job and shows its work on a readout you can check at a glance, with gloves on, from across the room.</p>
+    </div>
+
+    <ul class="grid gap-[3px] sm:grid-cols-2 xl:grid-cols-4">
+      
+      <li class="plate screws flex flex-col gap-4 px-6 py-8 sm:px-8">
+        <div class="flex items-center gap-3"><span class="num">1</span><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label flex-1">Cloud build</p><span class="led on" aria-hidden="true"></span></div>
+        <div class="slot px-3 py-2 text-[13px]">Index 0.72 · Rising</div>
+        <h3 class="font-display text-[15px] leading-snug">Sees towers forming</h3>
+        <p class="text-[16px] leading-relaxed">A sky camera scores vertical growth every ninety seconds, so a cell that will matter by dusk is flagged at lunch.</p>
+      </li>
+      
+      <li class="plate screws flex flex-col gap-4 px-6 py-8 sm:px-8">
+        <div class="flex items-center gap-3"><span class="num">2</span><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label flex-1">Wind shear</p><span class="led " aria-hidden="true"></span></div>
+        <div class="slot px-3 py-2 text-[13px]">14 kt NW · Backing</div>
+        <h3 class="font-display text-[15px] leading-snug">Knows the lee side</h3>
+        <p class="text-[16px] leading-relaxed">Two anemometers at three and nine metres catch the shift early and name the paddock that will be sheltered when it lands.</p>
+      </li>
+      
+      <li class="plate screws flex flex-col gap-4 px-6 py-8 sm:px-8">
+        <div class="flex items-center gap-3"><span class="num">3</span><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label flex-1">Pasture moisture</p><span class="led " aria-hidden="true"></span></div>
+        <div class="slot px-3 py-2 text-[13px]">31% · Firm footing</div>
+        <h3 class="font-display text-[15px] leading-snug">Reads the ground too</h3>
+        <p class="text-[16px] leading-relaxed">Buried probes tell you which gates will be mud after the rain, so the route you pick is one the herd can walk.</p>
+      </li>
+      
+      <li class="plate screws flex flex-col gap-4 px-6 py-8 sm:px-8">
+        <div class="flex items-center gap-3"><span class="num">4</span><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label flex-1">Herd position</p><span class="led on" aria-hidden="true"></span></div>
+        <div class="slot px-3 py-2 text-[13px]">Herd B · 48 head</div>
+        <h3 class="font-display text-[15px] leading-snug">Counts who is where</h3>
+        <p class="text-[16px] leading-relaxed">Collar pings place every group on the map. The move window is worked out from how far they have to go.</p>
+      </li>
+      
+    </ul>
+  </section>
+
+  
+  <section id="log" aria-labelledby="log-title" class="grid scroll-mt-2 gap-[3px] lg:grid-cols-2">
+    <div class="plate flex flex-col px-5 pb-6 pt-3 sm:px-8">
+      <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label pb-2">Printer · Day log</p>
+      <div class="bezel flex-1 p-[7px]">
+        <ol class="h-full space-y-3 bg-[#0d0d0c] px-4 py-5 font-mono text-[13px] leading-relaxed text-phos sm:px-6 sm:text-[14px]">
+          
+          <li class="grid grid-cols-[3.4rem_1fr] gap-3"><span>05:40</span><span>Cloud base dropping over the west ridge. Watching.</span></li>
+          
+          <li class="grid grid-cols-[3.4rem_1fr] gap-3"><span>08:15</span><span>Build index 0.55 and rising. Wind backing NW.</span></li>
+          
+          <li class="grid grid-cols-[3.4rem_1fr] gap-3"><span>09:10</span><span>Advice: move Herd B from Paddock C to Lee B before 13:20.</span></li>
+          
+          <li class="grid grid-cols-[3.4rem_1fr] gap-3"><span>11:45</span><span>Herd B through the east gate. 48 of 48 counted.</span></li>
+          
+          <li class="grid grid-cols-[3.4rem_1fr] gap-3"><span>13:30</span><span>Front on the mast. Gusts 41 kt. Hail, nine minutes.</span></li>
+          
+          <li class="grid grid-cols-[3.4rem_1fr] gap-3"><span>14:05</span><span>Clear. No losses. Log closed.</span></li>
+          
+          <li aria-hidden="true"><span class="blink">▮</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="plate screws flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-16">
+      <div class="flex items-center gap-3"><span class="num">C</span><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Field log</p></div>
+      <h2 id="log-title" class="mt-6 max-w-[20ch] font-display text-[24px] leading-[1.3] sm:text-[32px]">One Tuesday on the north range.</h2>
+      <p class="mt-6 max-w-[56ch] text-[17px] leading-relaxed">Six lines, one decision. The console does not ask you to study a radar loop. It tells you what it saw, what it advises, and whether the herd made it.</p>
+      <figure class="well mt-8 px-5 py-5">
+        <blockquote class="text-[17px] leading-relaxed">“I used to stand on the porch and guess. Now I read one line at breakfast and we are done moving by noon.”</blockquote>
+        <figcaption class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label mt-3">Ines Okafor · 2,300 ha, north range</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  
+  <section id="order" aria-labelledby="order-title" class="grid scroll-mt-2 gap-[3px] lg:grid-cols-[minmax(0,1fr)_330px]">
+    <div class="plate screws px-6 py-14 sm:px-12 sm:py-20 lg:px-16">
+      <div class="flex items-center gap-3"><span class="num">D</span><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Order</p></div>
+      <h2 id="order-title" class="mt-6 max-w-[20ch] font-display text-[26px] leading-[1.25] sm:text-[40px]">Put a console on your desk before spring.</h2>
+      <p class="mt-6 max-w-[54ch] text-[17px] leading-relaxed">We build in small batches and install each station ourselves. Tell us the size of your range and we will reply with a mast position, a price and a date.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#" class="key key-dark px-6 py-4 text-[12px] uppercase tracking-[.14em]">Request a field unit</a>
+        <a href="/grisaseo/#instruments" class="key px-6 py-4 text-[12px] uppercase tracking-[.14em]">Review the instruments</a>
+      </div>
+    </div>
+    <ul class="grid gap-[3px] sm:grid-cols-3 lg:grid-cols-1">
+      
+      <li class="plate flex flex-col justify-center gap-2 px-5 py-5"><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Next batch ships</p><div class="slot px-2 py-2 text-[13px]">March · 40 units</div></li>
+      
+      <li class="plate flex flex-col justify-center gap-2 px-5 py-5"><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Install</p><div class="slot px-2 py-2 text-[13px]">One day · Two people</div></li>
+      
+      <li class="plate flex flex-col justify-center gap-2 px-5 py-5"><p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label">Subscription</p><div class="slot px-2 py-2 text-[13px]">None · You own it</div></li>
+      
+    </ul>
+  </section>
+</main>
+
+
+  <footer class="plate px-6 py-8 sm:px-12 lg:px-16">
+    <div class="flex flex-wrap items-start justify-between gap-8">
+      <div>
+        <p class="font-display text-[15px] tracking-[.18em]">HALDEN</p>
+        <p class="font-mono text-[10px] font-medium uppercase leading-[1.2] tracking-[.14em] text-label mt-2">Sky console MK-7 · Serial 02-0847</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 text-[15px]">
+          
+          <li><a href="/grisaseo/#station" class="underline underline-offset-4 hover:no-underline">Station</a></li>
+          
+          <li><a href="/grisaseo/#instruments" class="underline underline-offset-4 hover:no-underline">Instruments</a></li>
+          
+          <li><a href="/grisaseo/#log" class="underline underline-offset-4 hover:no-underline">Field log</a></li>
+          
+          <li><a href="/grisaseo/#order" class="underline underline-offset-4 hover:no-underline">Order</a></li>
+          
+          <li><a href="#" class="underline underline-offset-4 hover:no-underline">field@halden.example</a></li>
+          
+        </ul>
+      </nav>
+    </div>
+    <div class="mt-8 flex flex-wrap justify-between gap-3 border-t border-putty-lo pt-5 text-[13px] text-label">
+      <p>© 2026 Halden Instruments. Built for open range.</p>
+      <p class="[&amp;_a]:underline [&amp;_a]:underline-offset-2 [&amp;_a:hover]:no-underline"></p><p style="text-align: left;">Photos: Marcin Konsek (CC BY-SA 4.0) and Alex Ang (CC BY-SA 3.0), via</p><p style="text-align: left;"><a href="#">Wikimedia Commons</a></p><p style="text-align: left;">.</p><p></p>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var horizon = document.getElementById('horizon');
+  if (!horizon) return;
+
+  var feeds = {
+    N: { channel: '01', feed: 'North range', base: 2140, wind: [14, 'NW'], build: 0.72, moist: 31, eta: 15120, herd: 'Herd B · 48 head', move: 'C → Lee B', alert: 'Front inbound', advisory: 'North range: move Herd B to Lee B before the front reaches the ridge.', position: '62% 70%', curve: [96, 94, 90, 88, 82, 74, 66, 56, 48, 40, 34, 30, 27] },
+    E: { channel: '02', feed: 'East range', base: 2610, wind: [9, 'N'], build: 0.41, moist: 44, eta: 30600, herd: 'Herd A · 112 head', move: 'Hold in E2', alert: 'Watch conditions', advisory: 'East range: Herd A can stay in E2. Check again as the cloud base lowers.', position: '78% 65%', curve: [84, 82, 83, 80, 78, 77, 74, 72, 71, 68, 66, 65, 63] },
+    S: { channel: '03', feed: 'South range', base: 1780, wind: [22, 'W'], build: 0.88, moist: 19, eta: 6300, herd: 'Herd D · 67 head', move: 'S4 → Gully', alert: 'Move now', advisory: 'South range: move Herd D from S4 to Gully. The front is close.', position: '44% 72%', curve: [100, 92, 80, 74, 60, 52, 40, 36, 28, 24, 20, 18, 16] },
+    W: { channel: '04', feed: 'West range', base: 3050, wind: [6, 'SW'], build: 0.18, moist: 52, eta: 54000, herd: 'Herd C · 29 head', move: 'No move', alert: 'Range clear', advisory: 'West range: no move needed. Keep the herd where it is.', position: '23% 70%', curve: [70, 71, 69, 70, 68, 69, 66, 67, 65, 64, 64, 62, 61] }
+  };
+  var order = ['N', 'E', 'S', 'W'];
+  var storageKey = 'grisaseo:console';
+  var state = { range: 'N', eta: feeds.N.eta, hold: false, scan: false, entry: '', beat: 0 };
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var consoleRoot = document.getElementById('console');
+  var gain = document.getElementById('gain');
+  var curve = document.getElementById('curve');
+  var picture = document.getElementById('main-picture');
+  var holdButton = document.getElementById('hold');
+  var scanButton = document.getElementById('scan');
+  var resetButton = document.getElementById('reset-console');
+
+  function out(name, text) {
+    document.querySelectorAll('[data-out="' + name + '"]').forEach(function (element) { element.textContent = text; });
+  }
+  function pad(number) { return String(number).padStart(2, '0'); }
+  function hms(seconds) { return pad(Math.floor(seconds / 3600)) + ':' + pad(Math.floor(seconds % 3600 / 60)) + ':' + pad(seconds % 60); }
+  function clamp(number, min, max) { return Math.max(min, Math.min(max, number)); }
+  function save() {
+    try { localStorage.setItem(storageKey, JSON.stringify({ range: state.range, horizon: Number(horizon.value), gain: Number(gain.value) })); } catch (_) {}
+  }
+  function readSaved() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+      if (feeds[saved.range]) state.range = saved.range;
+      if (Number.isFinite(saved.horizon)) horizon.value = clamp(saved.horizon, 2, 12);
+      if (Number.isFinite(saved.gain)) gain.value = clamp(saved.gain, 60, 140);
+    } catch (_) {}
+  }
+  function drawCurve() {
+    var points = feeds[state.range].curve;
+    var count = Math.max(2, Math.round(points.length * Number(horizon.value) / 12));
+    var path = '';
+    for (var i = 0; i < count; i++) path += (i ? ' L' : 'M') + (12 + i * 216 / (count - 1)).toFixed(1) + ' ' + points[i];
+    curve.setAttribute('d', path);
+    out('horizon', horizon.value);
+    horizon.setAttribute('aria-valuetext', horizon.value + ' hours');
+  }
+  function status() {
+    out('state', state.hold ? 'Hold' : state.scan ? 'Scan · ' + state.range : 'Live · ' + state.range);
+    holdButton.setAttribute('aria-pressed', String(state.hold));
+    scanButton.setAttribute('aria-pressed', String(state.scan));
+  }
+  function setRange(key) {
+    var feed = feeds[key];
+    if (!feed) return;
+    state.range = key;
+    state.eta = feed.eta;
+    out('channel', feed.channel);
+    out('feed', feed.feed);
+    out('base', feed.base.toLocaleString('en-US'));
+    out('wind', feed.wind[0] + ' kt ' + feed.wind[1]);
+    out('build', feed.build.toFixed(2));
+    out('moist', feed.moist);
+    out('herd', feed.herd);
+    out('move', feed.move);
+    out('eta', hms(state.eta));
+    out('alert', feed.alert);
+    out('advisory', feed.advisory);
+    picture.style.objectPosition = feed.position;
+    document.getElementById('moist-bar').style.width = feed.moist + '%';
+    document.querySelectorAll('[data-range][aria-pressed]').forEach(function (button) {
+      button.setAttribute('aria-pressed', String(button.dataset.range === key));
+    });
+    drawCurve();
+    status();
+    save();
+  }
+  function setGain() {
+    picture.style.filter = 'brightness(' + Number(gain.value) / 100 + ') contrast(' + (0.8 + Number(gain.value) / 500) + ')';
+    out('gain', gain.value);
+    gain.setAttribute('aria-valuetext', gain.value + ' percent');
+    save();
+  }
+  function showEntry() {
+    out('entry', state.entry ? 'PDK ' + (state.entry + '_').slice(0, 2) : 'PDK __ · Key no. + ENT');
+  }
+  function lookup() {
+    if (!state.entry) { out('entry', 'Enter a paddock number, then ENT'); return; }
+    var number = parseInt(state.entry, 10);
+    var head = 12 + number * 37 % 90;
+    var hour = 11 + number % 7;
+    out('entry', 'PDK ' + pad(number) + ' · ' + head + ' head · By ' + pad(hour) + ':' + pad(number * 13 % 60));
+    state.entry = '';
+  }
+  function enterKey(key) {
+    if (key === 'ent') lookup();
+    else { state.entry = key === 'clr' ? '' : (state.entry + key).slice(-2); showEntry(); }
+  }
+  function nudge(type, amount) {
+    var input = type === 'gain' ? gain : horizon;
+    input.value = clamp(Number(input.value) + amount, Number(input.min), Number(input.max));
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  function setHold(on) { state.hold = on; status(); }
+  function setScan(on) {
+    state.scan = on;
+    if (on && !state.hold) setRange(order[(order.indexOf(state.range) + 1) % 4]);
+    status();
+  }
+  function reset() {
+    state.hold = false;
+    state.scan = false;
+    state.entry = '';
+    horizon.value = 6;
+    gain.value = 100;
+    try { localStorage.removeItem(storageKey); } catch (_) {}
+    setRange('N');
+    setGain();
+    showEntry();
+    resetButton.focus({ preventScroll: true });
+  }
+  function clock() {
+    var date = new Date();
+    out('clock', pad(date.getUTCHours()) + ':' + pad(date.getUTCMinutes()) + ':' + pad(date.getUTCSeconds()));
+  }
+  function tick() {
+    if (state.hold || document.hidden) return;
+    state.beat++;
+    clock();
+    if (state.eta > 0) { state.eta--; out('eta', hms(state.eta)); }
+    if (state.scan && state.beat % 4 === 0) setRange(order[(order.indexOf(state.range) + 1) % 4]);
+    else if (state.beat % 3 === 0) {
+      var feed = feeds[state.range];
+      out('wind', (feed.wind[0] + Math.round(Math.random() * 2 - 1)) + ' kt ' + feed.wind[1]);
+      out('base', (feed.base + Math.round(Math.random() * 6 - 3) * 10).toLocaleString('en-US'));
+    }
+  }
+
+  consoleRoot.addEventListener('click', function (event) {
+    var button = event.target.closest('button');
+    if (!button) return;
+    if (button.dataset.range) setRange(button.dataset.range);
+    if (button.dataset.key) enterKey(button.dataset.key);
+    if (button.dataset.nudge) {
+      var parts = button.dataset.nudge.split(':');
+      nudge(parts[0], Number(parts[1]));
+    }
+    if (button === holdButton) setHold(!state.hold);
+    if (button === scanButton) setScan(!state.scan);
+    if (button === resetButton) reset();
+  });
+  consoleRoot.addEventListener('keydown', function (event) {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.target.matches('input, textarea, select, [contenteditable]')) return;
+    if (event.target.closest('button, a') && (event.key === 'Enter' || event.key === ' ')) return;
+    var key = event.key;
+    var functionRanges = { F1: 'N', F2: 'E', F3: 'S', F4: 'W' };
+    if (functionRanges[key]) setRange(functionRanges[key]);
+    else if (/^[0-9]$/.test(key)) enterKey(key);
+    else if (key === 'Enter') enterKey('ent');
+    else if (key === 'Backspace' || key === 'Delete') enterKey('clr');
+    else if (key.toLowerCase() === 'h') setHold(!state.hold);
+    else if (key.toLowerCase() === 's') setScan(!state.scan);
+    else if (key.toLowerCase() === 'r') reset();
+    else if (key === 'ArrowLeft') nudge('horizon', -1);
+    else if (key === 'ArrowRight') nudge('horizon', 1);
+    else if (key === 'ArrowUp') nudge('gain', 8);
+    else if (key === 'ArrowDown') nudge('gain', -8);
+    else return;
+    event.preventDefault();
+  });
+  horizon.addEventListener('input', function () { drawCurve(); save(); });
+  gain.addEventListener('input', setGain);
+  readSaved();
+  setRange(state.range);
+  setGain();
+  clock();
+  if (!reduce) setInterval(tick, 1000);
+})();
+</script>
+</body></html>
